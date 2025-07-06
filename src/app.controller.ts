@@ -1,12 +1,17 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
+import { ConfigService } from '@nestjs/config';
 //컨트롤러는 요청을 handling 하는 역할할
-@Controller({ path: "user" })
+@Controller({ path: '' })
 export class AppController {
-  constructor(private readonly appService: AppService) { }
+  constructor(
+    private readonly appService: AppService,
+    private configService: ConfigService,
+  ) {}
 
-  @Get("all")
+  @Get()
   getHello(): string {
-    return this.appService.getHello();
+    console.log(this.configService.get('port'));
+    return this.configService.get('dbconfig.dev.type') || '';
   }
 }

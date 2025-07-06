@@ -18,6 +18,9 @@ export class Property {
   name: string;
 
   @Column()
+  type: string;
+
+  @Column()
   description: string;
 
   @Column({ default: 0 })

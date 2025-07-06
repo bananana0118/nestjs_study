@@ -3,10 +3,24 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PropertyModule } from './property/property.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { pgConfig } from 'dbConfig';
+import dbConfig from './config/db.config';
+import { ConfigModule } from '@nestjs/config';
+import dbConfigProduction from './config/db.config.production';
 
 @Module({
-  imports: [PropertyModule, TypeOrmModule.forRoot(pgConfig)],
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: '../.env',
+      isGlobal: true,
+      expandVariables: true,
+      load: [dbConfig, dbConfigProduction],
+    }),
+    PropertyModule,
+    TypeOrmModule.forRootAsync({
+      useFactory:
+        process.env.NODE_ENV === 'production' ? dbConfigProduction : dbConfig,
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

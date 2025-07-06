@@ -22,7 +22,7 @@ export class User {
   lastName: string;
 
   @Column()
-  ematil: string;
+  email: string;
 
   @Column()
   avatarUrl: string;
