@@ -19,5 +19,3 @@ datasource.initialize().then(async () => {
   await runSeeders(datasource);
   process.exit();
 });
-
-console.log(dbConfig());
